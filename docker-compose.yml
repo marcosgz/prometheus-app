@@ -1,0 +1,17 @@
+version: "3"
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prom/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prom/prometheus.rules.yml:/etc/prometheus/prometheus.rules.yml
+    depends_on:
+      - app
+  app:
+    build:
+      context: ./src/random
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
